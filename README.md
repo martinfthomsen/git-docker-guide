@@ -15,14 +15,14 @@ publication:
 ## Getting started
 
 This guide assumes the reader has a good grasp of scripting/coding/programming
-and knows how to use a commandline shell interface.
+and knows how to use a command line shell interface.
 To follow the guides you must have the following programs installed
 (see the links for installation instructions):
 * Docker
    * For Macintosh: https://store.docker.com/editions/community/docker-ce-desktop-mac
    * For Windows: https://store.docker.com/editions/community/docker-ce-desktop-windows
    * For Ubuntu: https://store.docker.com/editions/community/docker-ce-server-ubuntu
-* SourceTree (Supports Macintosh and Windows, Linux users are stuck with commandline interface)
+* SourceTree (Supports Macintosh and Windows, Linux users are stuck with command line interface (CLI))
    * https://www.sourcetreeapp.com/
 * git (Linux):
    * https://www.atlassian.com/git/tutorials/install-git#linux
@@ -30,6 +30,21 @@ To follow the guides you must have the following programs installed
    * https://github.com/git-lfs/git-lfs/releases/
 * git-flow (Linux):
    * http://nvie.com/posts/a-successful-git-branching-model/
+
+The guides are stored as PDF files in the repository. To follow these guides, it
+is recommended to clone this repository to your local machine, pull the git-lfs
+files, and play around with your local version of the repository while reading
+the guide. Hands-on experience is the best way to learn.
+
+For instructions on how to download the repository and the files through
+SourceTree, please read git-guide.pdf.
+
+To download the repository and the files through CLI:
+```bash
+git clone https://github.com/martinfthomsen/git-docker-guide.git
+cd git-docker-guide
+git lfs pull
+```
 
 ## Features
 
@@ -41,8 +56,7 @@ This repository serves several purposes:
 ## Troubleshooting
 #### MAC OS: Cannot run build command
 Try running this command to resolve any environment issues:
-```
-#!bash
+```bash
 eval "$(docker-machine env default)"
 ```
 
@@ -53,13 +67,11 @@ To solve this, you need to set the DNS of your docker machine.
 2. Locate "Dns" under "HostOptions" and "EngineOptions"
 3. Add "8.8.8.8" to the list
 ```
-#!markup
     "Dns": ["8.8.8.8"],
 ```
 
 Then restart the machine
-```
-#!bash
+```bash
 docker-machine restart default
 eval "$(docker-machine env default)"
 ```
@@ -72,13 +84,11 @@ updating to a new docker version.
 #### MAC OS: Docker takes up too much space?
 Check the disk space use on the machine:
 1. ssh into the virtual machine
-```
-#!bash
+```bash
 docker-machine ssh default
 ```
 2. Check the disk usage
-```
-#!bash
+```bash
 df -h
 ```
 
@@ -87,20 +97,18 @@ about losing the data on the machine, you can delete the machine and recreate it
 
 Stop and delete the default machine. (WARNING, this will remove all your
 containers, and all data stored inside the containers is lost!)
-```
-#!bash
+```bash
 docker-machine stop default
 docker-machine rm default
 docker-machine create --driver virtualbox --virtualbox-disk-size "15360" default
 ```
 
 --virtualbox-disk-size sets the disk size in MB. This example sets it to 15GB...
-Now you can check the diskspace again, and it should be all good again.
+Now you can check the disk space again, and it should look fine.
 Next step is now to reinstall all your images...
 
 #### How do I remove Docker containers
-```
-#!bash
+```bash
 # Remove all the exited containers
 docker rm -v $(docker ps -aq -f status=exited)
 
@@ -109,14 +117,12 @@ docker rm $(docker stop $(docker ps -aq))
 ```
 
 #### How do I clean up "dangling" Docker images
-```
-#!bash
+```bash
 docker rmi $(docker images -qf "dangling=true")
 ```
 
 #### How do I clean up "dangling" Docker volumes
-```
-#!bash
+```bash
 docker volume rm $(docker volume ls -qf dangling=true)
 ```
 
